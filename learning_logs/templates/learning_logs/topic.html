@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>topic page</title>
+</head>
+<body>
+
+{% extends "learning_logs/base.html" %}
+
+{% block page_header %}
+    <h3>{{topic}}</h3>
+{% endblock page_header %}
+
+{% block content %}
+<p>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">Add a new entry</a>
+</p>
+<ul>
+    {% for entry in entries %}
+    <div class="card mb-3">
+        <h4 class="card-header">
+            {{ entry.data_added|date:'M d,Y H:i' }}
+            <small>
+                <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+            </small>
+        </h4>
+    </div>
+    <div class="card-body">
+        {{ entry.text|linebreaks }}
+    </div>
+    {% empty %}
+    <p>There are no entries for this topic yet.</p>
+    {% endfor %}
+</ul>
+{% endblock content %}
+
+</body>
+</html>
